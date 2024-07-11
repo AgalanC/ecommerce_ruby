@@ -7,4 +7,32 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+
+# Ensure AdminUser exists
+AdminUser.find_or_create_by!(email: 'admin@example.com') do |admin|
+  admin.password = 'password'
+  admin.password_confirmation = 'password'
+end if Rails.env.development?
+
+require 'faker'
+
+# Clear existing data
+Category.destroy_all
+Beer.destroy_all
+
+# Create categories
+categories = ["Sours", "IPAs", "Lagers", "Stouts"].map do |category_name|
+  Category.create!(name: category_name, description: Faker::Lorem.sentence)
+end
+
+# Create products
+100.times do
+  Beer.create!(
+    name: Faker::Beer.name,
+    description: Faker::Lorem.paragraph,
+    price: Faker::Commerce.price(range: 5..20),
+    stock_quantity: Faker::Number.between(from: 10, to: 100),
+    category: categories.sample,
+    beer_type: Faker::Beer.style
+  )
+end
