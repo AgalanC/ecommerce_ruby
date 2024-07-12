@@ -36,3 +36,12 @@ end
     beer_type: Faker::Beer.style
   )
 end
+
+# Create initial StaticPages
+StaticPage.find_or_create_by!(title: 'About') do |page|
+  page.content = 'This is the about page content.'
+end
+
+StaticPage.find_or_create_by!(title: 'Contact') do |page|
+  page.content = 'This is the contact page content.'
+end
