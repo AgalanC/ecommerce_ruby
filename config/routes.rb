@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   get '/about', to: 'pages#show', id: 'about'
   get '/contact', to: 'pages#show', id: 'contact'
 
+  # Routes for products
+  resources :products, only: [:index, :show]
+
   # Defines the root path route ("/")
-  # root "posts#index"
+  root "products#index"
 end
