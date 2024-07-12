@@ -4,6 +4,7 @@ class Beer < ApplicationRecord
   has_many :orders, through: :order_items
   has_many :reviews
   has_many :cart_items
+  has_one_attached :image
 
   # Allowlist associations for Ransack
   def self.ransackable_associations(auth_object = nil)
