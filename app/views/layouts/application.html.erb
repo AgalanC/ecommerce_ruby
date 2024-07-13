@@ -4,7 +4,7 @@
   <title>HappyLand Corp</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-  <%# <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+  <%# <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %> %>
   <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', defer: true %>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -19,6 +19,9 @@
         <%= link_to 'Home', root_path, class: 'text-gray-600 hover:text-gray-900' %>
         <%= link_to 'About', about_path, class: 'text-gray-600 hover:text-gray-900' %>
         <%= link_to 'Contact', contact_path, class: 'text-gray-600 hover:text-gray-900' %>
+        <% Category.all.each do |category| %>
+          <%= link_to category.name, category_products_path(category), class: 'text-gray-600 hover:text-gray-900' %>
+        <% end %>
       </nav>
       <div class="md:hidden">
         <button id="menu-toggle" class="text-gray-600 hover:text-gray-900 focus:outline-none">
@@ -34,13 +37,16 @@
     <%= link_to 'Home', root_path, class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>
     <%= link_to 'About', about_path, class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>
     <%= link_to 'Contact', contact_path, class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>
+    <% Category.all.each do |category| %>
+      <%= link_to category.name, category_products_path(category), class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>
+    <% end %>
   </div>
 
   <%= yield %>
 
   <footer class="bg-gray-800 text-white mt-8 py-4">
     <div class="container mx-auto px-4">
-      <p class="text-center">&copy; <%= Time.now.year %> HappyLand Corp. All rights reserved.</p>
+      <p class="text-center">&copy; <%= Time.now.year %> YourAppName. All rights reserved.</p>
     </div>
   </footer>
 

@@ -13,9 +13,12 @@ Rails.application.routes.draw do
   get '/about', to: 'pages#show', id: 'about'
   get '/contact', to: 'pages#show', id: 'contact'
 
-  # Routes for products
-  resources :products, only: [:index, :show]
-
-  # Defines the root path route ("/")
+  # Define the root path route ("/")
   root "products#index"
+
+  # Route for products by category
+  get 'categories/:id', to: 'products#category', as: 'category_products'
+
+  # Resources for products
+  resources :products, only: [:index, :show]
 end

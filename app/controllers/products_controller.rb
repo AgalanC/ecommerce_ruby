@@ -6,4 +6,9 @@ class ProductsController < ApplicationController
   def show
     @product = Beer.find(params[:id])
   end
+
+  def category
+    @category = Category.find(params[:id])
+    @products = @category.beers
+  end
 end
