@@ -1,19 +1,58 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>EcommerceProjectRuby</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+<head>
+  <title>HappyLand Corp</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%# <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', defer: true %>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
+<body class="bg-gray-100 text-gray-900">
+  <header class="bg-white shadow">
+    <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+      <div class="text-xl font-bold">
+        <%= link_to 'HappyLand Corp', root_path %>
+      </div>
+      <nav class="hidden md:flex space-x-4">
+        <%= link_to 'Home', root_path, class: 'text-gray-600 hover:text-gray-900' %>
+        <%= link_to 'About', about_path, class: 'text-gray-600 hover:text-gray-900' %>
+        <%= link_to 'Contact', contact_path, class: 'text-gray-600 hover:text-gray-900' %>
+      </nav>
+      <div class="md:hidden">
+        <button id="menu-toggle" class="text-gray-600 hover:text-gray-900 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
-  </body>
+  <div id="mobile-menu" class="hidden md:hidden bg-white">
+    <%= link_to 'Home', root_path, class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>
+    <%= link_to 'About', about_path, class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>
+    <%= link_to 'Contact', contact_path, class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>
+  </div>
+
+  <%= yield %>
+
+  <footer class="bg-gray-800 text-white mt-8 py-4">
+    <div class="container mx-auto px-4">
+      <p class="text-center">&copy; <%= Time.now.year %> HappyLand Corp. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      var menu = document.getElementById('mobile-menu');
+      if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+      } else {
+        menu.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
 </html>

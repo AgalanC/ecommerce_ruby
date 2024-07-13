@@ -1,9 +1,13 @@
-<h1><%= @product.name %></h1>
-<p><%= @product.description %></p>
-<p>Price: <%= number_to_currency(@product.price) %></p>
-<% if @product.image.attached? %>
-  <%= image_tag url_for(@product.image), size: "400x400" %>
-<% end %>
-<%= link_to 'Back to Products', products_path %>
-
-<p>Find me in app/views/products/show.html.erb</p>
+<div class="container mx-auto px-4 py-8">
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <% if @product.image.attached? %>
+      <%= image_tag url_for(@product.image), class: "w-full h-64 object-cover" %>
+    <% end %>
+    <div class="p-4">
+      <h1 class="text-2xl font-bold"><%= @product.name %></h1>
+      <p class="text-gray-600 mt-4"><%= @product.description %></p>
+      <p class="text-gray-900 font-bold text-xl mt-4"><%= number_to_currency(@product.price) %></p>
+      <%= link_to 'Back to Products', products_path, class: "inline-block bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-600" %>
+    </div>
+  </div>
+</div>
