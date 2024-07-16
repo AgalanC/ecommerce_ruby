@@ -20,5 +20,9 @@ Rails.application.routes.draw do
   get 'categories/:id', to: 'products#category', as: 'category_products'
 
   # Resources for products
-  resources :products, only: [:index, :show]
+  resources :products, only: [:index, :show] do
+    collection do
+      get 'search'
+    end
+  end
 end
