@@ -24,4 +24,19 @@ class CartsController < ApplicationController
 
     redirect_to cart_path, notice: 'Product removed from cart successfully.'
   end
+
+  def update_item
+    product_id = params[:product_id]
+    new_quantity = params[:quantity].to_i
+
+    if session[:cart] && session[:cart][product_id]
+      if new_quantity > 0
+        session[:cart][product_id] = new_quantity
+      else
+        session[:cart].delete(product_id)
+      end
+    end
+
+    redirect_to cart_path, notice: 'Cart updated successfully.'
+  end
 end

@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  # Routes for cart functionality
   get 'carts/show'
   post 'carts/add_item', to: 'carts#add_item', as: 'add_item_cart'
   post 'carts/remove_item', to: 'carts#remove_item', as: 'remove_item_cart'
+  post 'carts/update_item', to: 'carts#update_item', as: 'update_item_cart'
 
+  # Devise and ActiveAdmin routes
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 

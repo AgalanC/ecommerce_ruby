@@ -26,7 +26,11 @@
                 </div>
               </td>
               <td class="py-3 px-6 text-center">
-                <span><%= @cart[product.id.to_s] %></span>
+                <%= form_with url: update_item_cart_path, method: :post, local: true do |f| %>
+                  <%= f.hidden_field :product_id, value: product.id %>
+                  <%= f.number_field :quantity, value: @cart[product.id.to_s], min: 1, class: 'w-16 mr-2' %>
+                  <%= f.submit 'Update', class: 'bg-blue-500 text-white py-1 px-2 rounded-lg hover:bg-blue-700' %>
+                <% end %>
               </td>
               <td class="py-3 px-6 text-right">
                 <span><%= number_to_currency(product.price) %></span>
