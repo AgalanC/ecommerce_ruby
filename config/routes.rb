@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  get 'pages/show'
+  get 'carts/show'
+  post 'carts/add_item', to: 'carts#add_item', as: 'add_item_cart'
+  post 'carts/remove_item', to: 'carts#remove_item', as: 'remove_item_cart'
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
@@ -25,4 +28,7 @@ Rails.application.routes.draw do
       get 'search'
     end
   end
+
+  # Route for cart
+  resource :cart, only: [:show]
 end
