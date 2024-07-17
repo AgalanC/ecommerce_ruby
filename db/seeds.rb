@@ -20,6 +20,7 @@ require 'open-uri'
 # Clear existing data
 Category.destroy_all
 Beer.destroy_all
+Tax.destroy_all
 
 # Create categories
 categories = ["Sours", "IPAs", "Lagers", "Stouts"].map do |category_name|
@@ -37,10 +38,14 @@ end
     beer_type: Faker::Beer.style
   )
 
-  # Attach a random image
-  image_url = "https://picsum.photos/200/300"
-  downloaded_image = URI.open(image_url)
-  beer.image.attach(io: downloaded_image, filename: "beer_#{beer.name.parameterize}.jpg")
+  # Attempt to attach a random image
+  begin
+    image_url = "https://picsum.photos/200/300"
+    downloaded_image = URI.open(image_url)
+    beer.image.attach(io: downloaded_image, filename: "beer_#{beer.name.parameterize}.jpg")
+  rescue Socket::ResolutionError => e
+    puts "Failed to download image for #{beer.name}: #{e.message}"
+  end
 
   beer.save!
 end
@@ -53,3 +58,18 @@ end
 StaticPage.find_or_create_by!(title: 'Contact') do |page|
   page.content = 'This is the contact page content.'
 end
+
+# Create provinces and their respective taxes
+Tax.create(province: 'Alberta', pst_rate: 0.0, gst_rate: 0.05, hst_rate: 0.0, qst_rate: 0.0)
+Tax.create(province: 'British Columbia', pst_rate: 0.07, gst_rate: 0.05, hst_rate: 0.0, qst_rate: 0.0)
+Tax.create(province: 'Manitoba', pst_rate: 0.07, gst_rate: 0.05, hst_rate: 0.0, qst_rate: 0.0)
+Tax.create(province: 'New Brunswick', pst_rate: 0.0, gst_rate: 0.0, hst_rate: 0.15, qst_rate: 0.0)
+Tax.create(province: 'Newfoundland and Labrador', pst_rate: 0.0, gst_rate: 0.0, hst_rate: 0.15, qst_rate: 0.0)
+Tax.create(province: 'Nova Scotia', pst_rate: 0.0, gst_rate: 0.0, hst_rate: 0.15, qst_rate: 0.0)
+Tax.create(province: 'Ontario', pst_rate: 0.0, gst_rate: 0.0, hst_rate: 0.13, qst_rate: 0.0)
+Tax.create(province: 'Prince Edward Island', pst_rate: 0.0, gst_rate: 0.0, hst_rate: 0.15, qst_rate: 0.0)
+Tax.create(province: 'Quebec', pst_rate: 0.0, gst_rate: 0.05, hst_rate: 0.0, qst_rate: 0.09975)
+Tax.create(province: 'Saskatchewan', pst_rate: 0.06, gst_rate: 0.05, hst_rate: 0.0, qst_rate: 0.0)
+Tax.create(province: 'Northwest Territories', pst_rate: 0.0, gst_rate: 0.05, hst_rate: 0.0, qst_rate: 0.0)
+Tax.create(province: 'Nunavut', pst_rate: 0.0, gst_rate: 0.05, hst_rate: 0.0, qst_rate: 0.0)
+Tax.create(province: 'Yukon', pst_rate: 0.0, gst_rate: 0.05, hst_rate: 0.0, qst_rate: 0.0)

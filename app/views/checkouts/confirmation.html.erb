@@ -1,0 +1,42 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold text-center my-8">Order Confirmation</h1>
+
+  <p class="text-center text-gray-700">Thank you for your order, <%= @user.name %>!</p>
+  <p class="text-center text-gray-700">Your order number is <%= @order.id %>.</p>
+  <p class="text-center text-gray-700">You will receive a confirmation email at <%= @user.email %> shortly.</p>
+
+  <h2 class="text-2xl font-bold my-4">Invoice</h2>
+  <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+    <thead>
+      <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+        <th class="py-3 px-6 text-left">Product</th>
+        <th class="py-3 px-6 text-center">Quantity</th>
+        <th class="py-3 px-6 text-right">Price</th>
+        <th class="py-3 px-6 text-right">Total</th>
+      </tr>
+    </thead>
+    <tbody class="text-gray-700 text-sm font-light">
+      <% @order.order_items.each do |item| %>
+        <tr class="border-b border-gray-200 hover:bg-gray-100">
+          <td class="py-3 px-6 text-left"><%= item.beer.name %></td>
+          <td class="py-3 px-6 text-center"><%= item.quantity %></td>
+          <td class="py-3 px-6 text-right"><%= number_to_currency(item.price) %></td>
+          <td class="py-3 px-6 text-right"><%= number_to_currency(item.price * item.quantity) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="text-right mt-4">
+    <p>Subtotal: <%= number_to_currency(@order.total_price) %></p>
+    <p>GST: <%= number_to_currency(@order.total_price * @order.tax.gst_rate) %></p>
+    <p>PST: <%= number_to_currency(@order.total_price * @order.tax.pst_rate) %></p>
+    <p>HST: <%= number_to_currency(@order.total_price * @order.tax.hst_rate) %></p>
+    <p>QST: <%= number_to_currency(@order.total_price * @order.tax.qst_rate) %></p>
+    <p class="font-bold">Total: <%= number_to_currency(@order.final_price) %></p>
+  </div>
+
+  <div class="mt-8 flex justify-center">
+    <%= link_to 'Back to Home', root_path, class: 'inline-block bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700' %>
+  </div>
+</div>

@@ -34,4 +34,9 @@ Rails.application.routes.draw do
 
   # Route for cart
   resource :cart, only: [:show]
+
+  # Route for checkout
+  resource :checkout, only: [:new, :create] do
+    get 'confirmation', on: :collection
+  end
 end
