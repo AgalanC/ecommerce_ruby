@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_12_070659) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_17_032901) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -81,7 +81,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_070659) do
     t.integer "beer_id"
     t.integer "quantity"
     t.decimal "price"
-    t.datetime "added_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -147,6 +146,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_070659) do
     t.string "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "username"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
