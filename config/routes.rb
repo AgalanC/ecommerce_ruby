@@ -9,6 +9,13 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  devise_for :users, skip: [:sessions]
+  as :user do
+    get 'signin', to: 'devise/sessions#new', as: :new_user_session
+    post 'signin', to: 'devise/sessions#create', as: :user_session
+    get 'signout', to: 'devise/sessions#destroy', as: :destroy_user_session
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -38,5 +45,10 @@ Rails.application.routes.draw do
   # Route for checkout
   resource :checkout, only: [:new, :create] do
     get 'confirmation', on: :collection
+  end
+
+  # Route for viewing past orders
+  resources :users, only: [] do
+    get 'orders', to: 'orders#index'
   end
 end

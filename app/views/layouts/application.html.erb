@@ -22,6 +22,14 @@
         <% Category.all.each do |category| %>
           <%= link_to category.name, category_products_path(category), class: 'text-gray-600 hover:text-gray-900' %>
         <% end %>
+        <% if user_signed_in? %>
+          <%= link_to 'My Orders', user_orders_path(current_user), class: 'text-gray-600 hover:text-gray-900' %>
+          <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'text-gray-600 hover:text-gray-900', data: {confirm: "Are you sure?"} %>
+          <%# <%= link_to 'Sign Out', destroy_user_session_path, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
+        <% else %>
+          <%= link_to 'Sign In', new_user_session_path, class: 'text-gray-600 hover:text-gray-900' %>
+          <%= link_to 'Sign Up', new_user_registration_path, class: 'text-gray-600 hover:text-gray-900' %>
+        <% end %>
       </nav>
       <div class="md:hidden">
         <button id="menu-toggle" class="text-gray-600 hover:text-gray-900 focus:outline-none">
@@ -39,6 +47,13 @@
     <%= link_to 'Contact', contact_path, class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>
     <% Category.all.each do |category| %>
       <%= link_to category.name, category_products_path(category), class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>
+    <% end %>
+    <% if user_signed_in? %>
+      <%= link_to 'My Orders', user_orders_path(current_user), class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>
+      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>
+    <% else %>
+      <%= link_to 'Sign In', new_user_session_path, class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>
+      <%= link_to 'Sign Up', new_user_registration_path, class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>
     <% end %>
   </div>
 

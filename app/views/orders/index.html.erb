@@ -1,0 +1,21 @@
+<!-- app/views/orders/index.html.erb -->
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold text-center my-8">My Orders</h1>
+  <% @orders.each do |order| %>
+    <div class="bg-white shadow-md rounded-lg p-4 mb-6">
+      <h2 class="text-2xl font-semibold mb-2">Order #<%= order.id %></h2>
+      <p class="mb-2">Placed on: <%= order.created_at.strftime("%B %d, %Y") %></p>
+      <p class="mb-2">Total Price: <%= number_to_currency(order.total_price) %></p>
+      <p class="mb-2">Total Tax: <%= number_to_currency(order.total_tax) %></p>
+      <p class="mb-2">Final Price: <%= number_to_currency(order.final_price) %></p>
+      <h3 class="text-xl font-semibold mt-4 mb-2">Items:</h3>
+      <ul>
+        <% order.order_items.each do |item| %>
+          <li class="mb-2">
+            <%= item.beer.name %> - Quantity: <%= item.quantity %> - Price: <%= number_to_currency(item.price) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
