@@ -1,21 +1,42 @@
-<!-- app/views/orders/index.html.erb -->
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold text-center my-8">My Orders</h1>
-  <% @orders.each do |order| %>
-    <div class="bg-white shadow-md rounded-lg p-4 mb-6">
-      <h2 class="text-2xl font-semibold mb-2">Order #<%= order.id %></h2>
-      <p class="mb-2">Placed on: <%= order.created_at.strftime("%B %d, %Y") %></p>
-      <p class="mb-2">Total Price: <%= number_to_currency(order.total_price) %></p>
-      <p class="mb-2">Total Tax: <%= number_to_currency(order.total_tax) %></p>
-      <p class="mb-2">Final Price: <%= number_to_currency(order.final_price) %></p>
-      <h3 class="text-xl font-semibold mt-4 mb-2">Items:</h3>
-      <ul>
-        <% order.order_items.each do |item| %>
-          <li class="mb-2">
-            <%= item.beer.name %> - Quantity: <%= item.quantity %> - Price: <%= number_to_currency(item.price) %>
-          </li>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Orders</title>
+  <%= csrf_meta_tags %>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-center my-8">My Orders</h1>
+    <% if @orders.any? %>
+      <div class="space-y-8">
+        <% @orders.each do |order| %>
+          <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Order ID: <%= order.id %></h2>
+            <p class="mb-2"><strong>Date:</strong> <%= order.created_at.strftime("%B %d, %Y") %></p>
+            <p class="mb-2"><strong>Status:</strong> <%= order.status %></p>
+            <p class="mb-2"><strong>Total Price:</strong> $<%= order.total_price %></p>
+            <p class="mb-2"><strong>Total Tax:</strong> $<%= order.total_tax %></p>
+            <p class="mb-2"><strong>Final Price:</strong> $<%= order.final_price %></p>
+            <h3 class="text-xl font-semibold mt-4 mb-2">Order Items:</h3>
+            <ul class="list-disc list-inside">
+              <% order.order_items.each do |item| %>
+                <li class="mb-1">
+                  <strong><%= item.beer.name %></strong> - Quantity: <%= item.quantity %> - Price: $<%= item.price %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
-      </ul>
+      </div>
+    <% else %>
+      <p class="text-center text-gray-700">You have no orders.</p>
+    <% end %>
+    <div class="mt-8 text-center">
+      <%= link_to 'Continue Shopping', products_path, class: 'inline-block bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700' %>
     </div>
-  <% end %>
-</div>
+  </div>
+</body>
+</html>
