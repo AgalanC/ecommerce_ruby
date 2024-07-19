@@ -1,46 +1,56 @@
-<h2>Sign up</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <%= csrf_meta_tags %>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+  <div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
+      <h2 class="text-3xl font-extrabold text-center text-gray-900">Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), class: 'space-y-6') do |f| %>
+        <%= devise_error_messages! %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+        <div class="rounded-md shadow-sm -space-y-px">
+          <div>
+            <%= f.label :name, class: 'sr-only' %>
+            <%= f.text_field :name, placeholder: "Name", class: 'relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm' %>
+          </div>
+          <div>
+            <%= f.label :username, class: 'sr-only' %>
+            <%= f.text_field :username, placeholder: "Username", class: 'relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm' %>
+          </div>
+          <div>
+            <%= f.label :email, class: 'sr-only' %>
+            <%= f.email_field :email, placeholder: "Email", class: 'relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm' %>
+          </div>
+          <div>
+            <%= f.label :address, class: 'sr-only' %>
+            <%= f.text_area :address, placeholder: "Address", class: 'relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm' %>
+          </div>
+          <div>
+            <%= f.label :password, class: 'sr-only' %>
+            <%= f.password_field :password, placeholder: "Password", class: 'relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm' %>
+          </div>
+          <div>
+            <%= f.label :password_confirmation, class: 'sr-only' %>
+            <%= f.password_field :password_confirmation, placeholder: "Password Confirmation", class: 'relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm' %>
+          </div>
+        </div>
+
+        <div class="pt-4">
+          <%= f.submit "Sign up", class: 'group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer' %>
+        </div>
+      <% end %>
+
+      <div class="pt-4 text-center">
+        <%= link_to 'Sign in', new_user_session_path, class: 'font-medium text-indigo-600 hover:text-indigo-500' %>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :username %><br />
-    <%= f.text_field :username, autocomplete: "username" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :address %><br />
-    <%= f.text_area :address, autocomplete: "address" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :province, "Province" %><br />
-    <%= f.select :province, options_from_collection_for_select(Tax.all, "province", "province"), prompt: "Select Province" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</body>
+</html>
