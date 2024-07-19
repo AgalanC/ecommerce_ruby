@@ -1,6 +1,10 @@
 class CheckoutsController < ApplicationController
   def new
-    @user = User.new
+    if user_signed_in?
+      @user = current_user
+    else
+      @user = User.new
+    end
     @cart = session[:cart] || {}
     @products = Beer.where(id: @cart.keys)
   end
