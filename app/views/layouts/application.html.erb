@@ -24,6 +24,7 @@
         <% end %>
         <% if user_signed_in? %>
           <%= link_to 'My Orders', user_orders_path(current_user), class: 'text-gray-600 hover:text-gray-900' %>
+          <%= link_to 'My Account', edit_user_registration_path, class: 'text-gray-600 hover:text-gray-900' %>
           <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'text-gray-600 hover:text-gray-900', data: {confirm: "Are you sure?"} %>
           <%# <%= link_to 'Sign Out', destroy_user_session_path, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
         <% else %>
@@ -50,6 +51,7 @@
     <% end %>
     <% if user_signed_in? %>
       <%= link_to 'My Orders', user_orders_path(current_user), class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>
+      <%= link_to 'My Account', edit_user_registration_path, class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>
       <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>
     <% else %>
       <%= link_to 'Sign In', new_user_session_path, class: 'block px-4 py-2 text-gray-600 hover:bg-gray-100' %>

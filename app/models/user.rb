@@ -11,4 +11,18 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :address, presence: true
+
+  # Added methods for province
+  def province
+    orders.last&.tax&.province
+  end
+
+  def province=(province_name)
+    tax = Tax.find_by(province: province_name)
+    if tax
+      orders.each do |order|
+        order.update(tax: tax)
+      end
+    end
+  end
 end
