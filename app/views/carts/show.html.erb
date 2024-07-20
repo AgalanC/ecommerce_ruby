@@ -1,10 +1,10 @@
 <div class="container mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold text-center my-8">Shopping Cart</h1>
+  <h1 class="text-3xl font-bold text-center my-8 text-indigo-600">Shopping Cart</h1>
   <% if @cart.present? %>
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto shadow-lg rounded-lg">
       <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
         <thead>
-          <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+          <tr class="bg-indigo-100 text-indigo-800 uppercase text-sm leading-normal">
             <th class="py-3 px-6 text-left">Product</th>
             <th class="py-3 px-6 text-center">Quantity</th>
             <th class="py-3 px-6 text-right">Price</th>
@@ -14,32 +14,32 @@
         </thead>
         <tbody class="text-gray-700 text-sm font-light">
           <% @products.each do |product| %>
-            <tr class="border-b border-gray-200 hover:bg-gray-100">
+            <tr class="border-b border-gray-200 hover:bg-gray-50">
               <td class="py-3 px-6 text-left">
                 <div class="flex items-center">
                   <div class="mr-2">
                     <% if product.image.attached? %>
-                      <img src="<%= url_for(product.image) %>" alt="<%= product.name %>" class="w-12 h-12 object-cover rounded-lg">
+                      <img src="<%= url_for(product.image) %>" alt="<%= product.name %>" class="w-12 h-12 object-cover rounded-lg shadow-md">
                     <% end %>
                   </div>
-                  <span><%= product.name %></span>
+                  <span class="font-medium text-gray-900"><%= product.name %></span>
                 </div>
               </td>
               <td class="py-3 px-6 text-center">
                 <%= form_with url: update_item_cart_path, method: :post, local: true do |f| %>
                   <%= f.hidden_field :product_id, value: product.id %>
-                  <%= f.number_field :quantity, value: @cart[product.id.to_s], min: 1, class: 'w-16 mr-2' %>
-                  <%= f.submit 'Update', class: 'bg-blue-500 text-white py-1 px-2 rounded-lg hover:bg-blue-700' %>
+                  <%= f.number_field :quantity, value: @cart[product.id.to_s], min: 1, class: 'w-16 border rounded-lg p-2 shadow-sm focus:ring focus:ring-indigo-300' %>
+                  <%= f.submit 'Update', class: 'bg-indigo-600 text-white py-1 px-2 rounded-lg hover:bg-indigo-700 cursor-pointer ml-2' %>
                 <% end %>
               </td>
               <td class="py-3 px-6 text-right">
-                <span><%= number_to_currency(product.price) %></span>
+                <span class="font-medium text-gray-900"><%= number_to_currency(product.price) %></span>
               </td>
               <td class="py-3 px-6 text-right">
-                <span><%= number_to_currency(product.price * @cart[product.id.to_s]) %></span>
+                <span class="font-medium text-gray-900"><%= number_to_currency(product.price * @cart[product.id.to_s]) %></span>
               </td>
               <td class="py-3 px-6 text-center">
-                <%= button_to 'Remove', remove_item_cart_path(product_id: product.id), method: :post, class: 'bg-red-500 text-white rounded-lg py-2 px-4 hover:bg-red-700' %>
+                <%= button_to 'Remove', remove_item_cart_path(product_id: product.id), method: :post, class: 'bg-red-600 text-white rounded-lg py-2 px-4 hover:bg-red-700 cursor-pointer' %>
               </td>
             </tr>
           <% end %>
@@ -47,12 +47,12 @@
       </table>
     </div>
     <div class="mt-8 flex justify-center">
-      <%= link_to 'Proceed to Checkout', new_checkout_path, class: 'inline-block bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700' %>
+      <%= link_to 'Proceed to Checkout', new_checkout_path, class: 'inline-block bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 cursor-pointer' %>
     </div>
   <% else %>
     <p class="text-center text-gray-700">Your cart is empty.</p>
   <% end %>
   <div class="mt-8 flex justify-center">
-    <%= link_to 'Continue Shopping', products_path, class: 'inline-block bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700' %>
+    <%= link_to 'Continue Shopping', products_path, class: 'inline-block bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 cursor-pointer' %>
   </div>
 </div>

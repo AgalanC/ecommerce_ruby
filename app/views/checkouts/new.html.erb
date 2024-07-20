@@ -1,32 +1,34 @@
 <div class="container mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold text-center my-8">Checkout</h1>
+  <h1 class="text-3xl font-bold text-center my-8 text-indigo-600">Checkout</h1>
 
   <%= form_with url: checkout_path, method: :post, local: true do |form| %>
     <div class="mb-4">
-      <%= form.label :name, "Name" %>
+      <%= form.label :name, "Name", class: "block text-gray-700 text-sm font-bold mb-2" %>
       <%= form.text_field :name, value: @user.name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
     </div>
 
     <div class="mb-4">
-      <%= form.label :email, "Email" %>
+      <%= form.label :email, "Email", class: "block text-gray-700 text-sm font-bold mb-2" %>
       <%= form.email_field :email, value: @user.email, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
     </div>
 
     <div class="mb-4">
-      <%= form.label :address, "Address" %>
+      <%= form.label :address, "Address", class: "block text-gray-700 text-sm font-bold mb-2" %>
       <%= form.text_area :address, value: @user.address, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
     </div>
 
     <div class="mb-4">
-      <%= form.label :province, "Province" %>
+      <%= form.label :province, "Province", class: "block text-gray-700 text-sm font-bold mb-2" %>
       <%= form.select :province, options_from_collection_for_select(Tax.all, "id", "province", @user.orders.last&.tax_id), prompt: "Select Province", class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
     </div>
 
-    <%= form.submit "Place Order", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    <div class="mt-8">
+      <%= form.submit "Place Order", class: "bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded cursor-pointer w-full" %>
+    </div>
   <% end %>
 
   <div class="mt-8 flex justify-between">
-    <%= link_to 'Back to Cart', cart_path, class: 'inline-block bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-700' %>
-    <%= link_to 'Continue Shopping', products_path, class: 'inline-block bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700' %>
+    <%= link_to 'Back to Cart', cart_path, class: 'inline-block bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700' %>
+    <%= link_to 'Continue Shopping', products_path, class: 'inline-block bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700' %>
   </div>
 </div>
