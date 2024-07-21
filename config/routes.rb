@@ -52,4 +52,7 @@ Rails.application.routes.draw do
   resources :users, only: [] do
     get 'orders', to: 'orders#index'
   end
+
+  # Route for updating order status
+  patch 'orders/:id/update_status', to: 'orders#update_status', as: 'update_order_status'
 end

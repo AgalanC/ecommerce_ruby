@@ -1,25 +1,12 @@
 ActiveAdmin.register Order do
-
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
   permit_params :user_id, :tax_id, :status, :total_price, :total_tax, :final_price
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:user_id, :tax_id, :status, :total_price, :total_tax, :final_price]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
 
   index do
     selectable_column
     id_column
     column :user
     column :tax
+    column :status
     column :total_price
     column :total_tax
     column :final_price
@@ -55,12 +42,20 @@ ActiveAdmin.register Order do
   form do |f|
     f.inputs "Order Details" do
       f.input :user
-      f.input :tax
-      f.input :status
+      f.input :tax, as: :select, collection: Tax.all.map { |tax| [tax.province, tax.id] }, include_blank: false
+      f.input :status, as: :select, collection: %w[new paid shipped]
       f.input :total_price
       f.input :total_tax
       f.input :final_price
     end
     f.actions
   end
+
+  filter :user
+  filter :tax
+  filter :status, as: :select, collection: %w[new paid shipped]
+  filter :total_price
+  filter :total_tax
+  filter :final_price
+  filter :created_at
 end

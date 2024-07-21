@@ -4,13 +4,30 @@ class Order < ApplicationRecord
   has_many :order_items
   has_many :beers, through: :order_items
 
-  validates :user_id, :tax_id, presence: true # Ensure foreign keys are present
+  validates :user_id, :tax_id, :status, presence: true
+  validates :status, inclusion: { in: %w[new paid shipped] }
+
+  before_validation :set_default_status, on: :create
+
+  def mark_as_paid
+    update(status: 'paid')
+  end
+
+  def mark_as_shipped
+    update(status: 'shipped')
+  end
+
+  private
+
+  def set_default_status
+    self.status ||= 'new'
+  end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "final_price", "id", "status", "tax_id", "total_price", "total_tax", "updated_at", "user_id"]
+    %w[id user_id tax_id status total_price total_tax final_price created_at updated_at]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["beers", "order_items", "tax", "user"]
+    %w[user tax order_items beers]
   end
 end
