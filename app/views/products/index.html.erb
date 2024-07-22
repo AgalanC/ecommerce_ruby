@@ -9,6 +9,14 @@
     </div>
   <% end %>
 
+  <div class="flex justify-center mb-6">
+    <% if params[:filter] == 'new' || params[:filter] == 'recently_updated' %>
+      <%= link_to 'All Products', products_path, class: 'bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 mx-2' %>
+    <% end %>
+    <%= link_to 'New Products', products_path(filter: 'new'), class: 'bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 mx-2' %>
+    <%= link_to 'Recently Updated Products', products_path(filter: 'recently_updated'), class: 'bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 mx-2' %>
+  </div>
+
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     <% @products.each do |product| %>
       <div class="bg-white shadow-lg rounded-lg overflow-hidden">

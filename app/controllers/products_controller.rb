@@ -2,7 +2,13 @@ class ProductsController < ApplicationController
   # skip_before_action :authenticate_user!
 
   def index
-    @products = Beer.all
+    if params[:filter] == 'new'
+      @products = Beer.new_beers
+    elsif params[:filter] == 'recently_updated'
+      @products = Beer.recently_updated
+    else
+      @products = Beer.all
+    end
   end
 
   def show

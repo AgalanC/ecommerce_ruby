@@ -17,4 +17,8 @@ class Beer < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     %w[beer_type category_id created_at description id name price stock_quantity updated_at]
   end
+
+  # Scopes for filtering beers
+  scope :new_beers, -> { where('created_at >= ?', 3.days.ago) }
+  scope :recently_updated, -> { where('updated_at >= ? AND created_at < ?', 3.days.ago, 3.days.ago) }
 end
