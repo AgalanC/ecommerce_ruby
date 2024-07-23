@@ -8,4 +8,9 @@ class OrderItem < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     %w[beer_id created_at id order_id price quantity updated_at]
   end
+
+  # Allowlist associations for Ransack
+  def self.ransackable_associations(auth_object = nil)
+    %w[order beer]
+  end
 end

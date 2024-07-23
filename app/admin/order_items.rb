@@ -28,9 +28,18 @@ ActiveAdmin.register OrderItem do
     actions
   end
 
+  filter :beer
+  filter :order, collection: -> {
+    Order.all.map { |order| [order.display_name, order.id] }
+  }
+  filter :quantity
+  filter :price
+  filter :created_at
+  filter :updated_at
+
   form do |f|
     f.inputs "Order Item Details" do
-      f.input :order
+      f.input :order, collection: Order.all.map { |order| [order.display_name, order.id] }
       f.input :beer
       f.input :quantity
       f.input :price

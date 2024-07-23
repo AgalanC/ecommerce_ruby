@@ -17,6 +17,10 @@ class Order < ApplicationRecord
     update(status: 'shipped')
   end
 
+  def display_name
+    "Order ##{id}"
+  end
+
   private
 
   def set_default_status

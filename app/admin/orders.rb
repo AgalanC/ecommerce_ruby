@@ -5,7 +5,9 @@ ActiveAdmin.register Order do
     selectable_column
     id_column
     column :user
-    column :tax
+    column :tax do |order|
+      order.tax.province
+    end
     column :status
     column :total_price
     column :total_tax
@@ -18,7 +20,9 @@ ActiveAdmin.register Order do
     attributes_table do
       row :id
       row :user
-      row :tax
+      row :tax do |order|
+        order.tax.province
+      end
       row :status
       row :total_price
       row :total_tax
@@ -52,7 +56,7 @@ ActiveAdmin.register Order do
   end
 
   filter :user
-  filter :tax
+  filter :tax, as: :select, collection: Tax.all.map { |tax| [tax.province, tax.id] }
   filter :status, as: :select, collection: %w[new paid shipped]
   filter :total_price
   filter :total_tax

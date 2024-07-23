@@ -25,4 +25,14 @@ class User < ApplicationRecord
       end
     end
   end
+
+  # Define ransackable associations for Ransack search
+  def self.ransackable_associations(auth_object = nil)
+    %w[orders cart_items reviews]
+  end
+
+  # Define ransackable attributes for Ransack search
+  def self.ransackable_attributes(auth_object = nil)
+    %w[id name email address role created_at updated_at username]
+  end
 end
