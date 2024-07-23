@@ -2,6 +2,7 @@
   <h1 class="text-3xl font-bold text-center my-8 text-indigo-600">Checkout</h1>
 
   <%= form_with url: checkout_path, method: :post, local: true do |form| %>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <div class="mb-4">
       <%= form.label :name, "Name", class: "block text-gray-700 text-sm font-bold mb-2" %>
       <%= form.text_field :name, value: @user.name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>

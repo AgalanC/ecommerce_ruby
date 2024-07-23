@@ -1,4 +1,6 @@
 class CheckoutsController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:create]
+
   def new
     if user_signed_in?
       @user = current_user
@@ -10,13 +12,18 @@ class CheckoutsController < ApplicationController
   end
 
   def create
-    @user = User.find_or_initialize_by(email: params[:email])
-    @user.name = params[:name]
-    @user.address = params[:address]
+    if user_signed_in?
+      @user = current_user
+    else
+      @user = User.find_or_initialize_by(email: params[:email])
+      @user.name = params[:name]
+      @user.address = params[:address]
+      @user.password = SecureRandom.hex(8) # Set a random password for guest users
+    end
 
     if @user.save
       @tax = Tax.find(params[:province])
-      @order = @user.orders.create(tax: @tax)
+      @order = @user.orders.create(tax: @tax, status: 'new')
 
       @cart = session[:cart] || {}
       @products = Beer.where(id: @cart.keys)

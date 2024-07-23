@@ -1,10 +1,10 @@
 class Order < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :tax
   has_many :order_items
   has_many :beers, through: :order_items
 
-  validates :user_id, :tax_id, :status, presence: true
+  validates :tax_id, :status, presence: true
   validates :status, inclusion: { in: %w[new paid shipped] }
 
   before_validation :set_default_status, on: :create
