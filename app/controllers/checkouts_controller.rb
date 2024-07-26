@@ -23,7 +23,7 @@ class CheckoutsController < ApplicationController
 
     if @user.save
       @tax = Tax.find(params[:province])
-      @order = @user.orders.create(tax: @tax, status: 'new')
+      @order = @user.orders.create(tax: @tax, status: 'unpaid')
 
       @cart = session[:cart] || {}
       @products = Beer.where(id: @cart.keys)
@@ -39,7 +39,9 @@ class CheckoutsController < ApplicationController
       @order.save
 
       session[:cart] = {}
-      redirect_to confirmation_checkout_path(order_id: @order.id)
+
+      stripe_session_url = create_stripe_session(@order)
+      redirect_to stripe_session_url, allow_other_host: true
     else
       flash.now[:alert] = 'Error creating order. Please check the form and try again.'
       render :new
@@ -52,6 +54,31 @@ class CheckoutsController < ApplicationController
   end
 
   private
+
+  def create_stripe_session(order)
+    session = Stripe::Checkout::Session.create(
+      payment_method_types: ['card'],
+      line_items: order.order_items.map do |item|
+        {
+          price_data: {
+            currency: 'usd', # Replace with the appropriate currency if needed
+            product_data: {
+              name: item.beer.name,
+              description: item.beer.description,
+            },
+            unit_amount: (item.price * 100).to_i, # Stripe expects the amount in cents
+          },
+          quantity: item.quantity,
+        }
+      end,
+      mode: 'payment',
+      success_url: payment_success_orders_url + "?payment_intent={CHECKOUT_SESSION_ID}",
+      cancel_url: payment_failure_orders_url
+    )
+    order.stripe_payment_reference = session["id"]
+    order.save
+    session.url
+  end
 
   def user_params
     params.permit(:name, :email, :address)

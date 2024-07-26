@@ -51,8 +51,13 @@ Rails.application.routes.draw do
   # Route for viewing past orders
   resources :users, only: [] do
     get 'orders', to: 'orders#index'
+    get 'order', to: 'orders#show'
   end
 
   # Route for updating order status
   patch 'orders/:id/update_status', to: 'orders#update_status', as: 'update_order_status'
+
+  # Routes for handling payment success and failure
+  get 'orders/payment_success', to: 'orders#payment_success', as: 'payment_success_orders'
+  get 'orders/payment_failure', to: 'orders#payment_failure', as: 'payment_failure_orders'
 end

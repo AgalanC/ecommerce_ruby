@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_17_032901) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_23_065905) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -99,6 +99,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_032901) do
     t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "price_at_order"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -110,6 +111,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_032901) do
     t.decimal "final_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "payment_status"
+    t.string "stripe_payment_id"
+    t.decimal "gst_rate_at_order"
+    t.decimal "pst_rate_at_order"
+    t.decimal "hst_rate_at_order"
+    t.decimal "qst_rate_at_order"
+    t.string "stripe_session_id"
+    t.string "stripe_payment_reference"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -147,6 +156,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_032901) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "username"
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

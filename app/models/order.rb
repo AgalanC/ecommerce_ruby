@@ -5,7 +5,7 @@ class Order < ApplicationRecord
   has_many :beers, through: :order_items
 
   validates :tax_id, :status, presence: true
-  validates :status, inclusion: { in: %w[new paid shipped] }
+  validates :status, inclusion: { in: %w[unpaid paid shipped] }
 
   before_validation :set_default_status, on: :create
 
@@ -24,7 +24,7 @@ class Order < ApplicationRecord
   private
 
   def set_default_status
-    self.status ||= 'new'
+    self.status ||= 'unpaid'
   end
 
   def self.ransackable_attributes(auth_object = nil)
