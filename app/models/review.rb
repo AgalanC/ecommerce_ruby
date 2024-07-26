@@ -4,7 +4,7 @@ class Review < ApplicationRecord
 
   # Validations
   validates :rating, presence: true, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 5 }
-  validates :comment, presence: true
+  validates :comment, length: { maximum: 500 }
 
   # Allowlist attributes for Ransack
   def self.ransackable_attributes(auth_object = nil)

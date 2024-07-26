@@ -10,7 +10,7 @@ class Beer < ApplicationRecord
 
   # Validations
   validates :name, presence: true
-  validates :price, numericality: { greater_than: 0 }
+  validates :price, numericality: { greater_than_or_equal_to: 0.01 }
 
   # Allowlist associations for Ransack (if using search in ActiveAdmin)
   def self.ransackable_associations(auth_object = nil)
