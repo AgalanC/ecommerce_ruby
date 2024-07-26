@@ -5,7 +5,7 @@ ActiveAdmin.register Beer do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :name, :description, :price, :stock_quantity, :category_id, :beer_type, :image
+  permit_params :name, :description, :price, :stock_quantity, :category_id, :beer_type, :image, order_items_attributes: [:id, :order_id, :beer_id, :quantity, :price, :_destroy]
   #
   # or
   #
@@ -25,6 +25,15 @@ ActiveAdmin.register Beer do
       f.input :beer_type
       f.input :image, as: :file
     end
+
+    f.inputs "Order Items" do
+      f.has_many :order_items, allow_destroy: true, new_record: true do |oi|
+        oi.input :order
+        oi.input :quantity
+        oi.input :price
+      end
+    end
+
     f.actions
   end
 

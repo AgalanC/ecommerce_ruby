@@ -1,6 +1,6 @@
 class Beer < ApplicationRecord
   belongs_to :category
-  has_many :order_items
+  has_many :order_items, dependent: :destroy
   has_many :orders, through: :order_items
   has_many :reviews
   has_many :cart_items
@@ -25,4 +25,7 @@ class Beer < ApplicationRecord
   # Scopes for filtering beers
   scope :new_beers, -> { where('created_at >= ?', 3.days.ago) }
   scope :recently_updated, -> { where('updated_at >= ? AND created_at < ?', 3.days.ago, 3.days.ago) }
+
+  # Enable nested attributes for order items
+  accepts_nested_attributes_for :order_items, allow_destroy: true
 end
