@@ -8,6 +8,10 @@ class Beer < ApplicationRecord
   # Add this line to enable image attachment
   has_one_attached :image
 
+  # Validations
+  validates :name, presence: true
+  validates :price, numericality: { greater_than: 0 }
+
   # Allowlist associations for Ransack (if using search in ActiveAdmin)
   def self.ransackable_associations(auth_object = nil)
     %w[category order_items orders reviews cart_items]
