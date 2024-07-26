@@ -1,0 +1,48 @@
+<header class="bg-white shadow-lg">
+  <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <div class="text-2xl font-bold text-indigo-600">
+      <%= link_to 'HappyLand Corp', root_path %>
+    </div>
+    <nav class="hidden md:flex space-x-6">
+      <%= link_to 'Home', root_path, class: 'text-gray-700 hover:text-indigo-600 transition duration-300' %>
+      <%= link_to 'About', about_path, class: 'text-gray-700 hover:text-indigo-600 transition duration-300' %>
+      <%= link_to 'Contact', contact_path, class: 'text-gray-700 hover:text-indigo-600 transition duration-300' %>
+      <% Category.all.each do |category| %>
+        <%= link_to category.name, category_products_path(category), class: 'text-gray-700 hover:text-indigo-600 transition duration-300' %>
+      <% end %>
+      <% if user_signed_in? %>
+        <%= link_to 'My Orders', user_orders_path(current_user), class: 'text-gray-700 hover:text-indigo-600 transition duration-300' %>
+        <%= link_to 'My Account', edit_user_registration_path, class: 'text-gray-700 hover:text-indigo-600 transition duration-300' %>
+        <%= link_to 'Sign Out', destroy_user_session_path, method: :get, class: 'text-gray-700 hover:text-indigo-600 transition duration-300', data: {confirm: "Are you sure?"} %>
+        <%# <%= link_to 'Sign Out', destroy_user_session_path, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
+      <% else %>
+        <%= link_to 'Sign In', new_user_session_path, class: 'text-gray-700 hover:text-indigo-600 transition duration-300' %>
+        <%= link_to 'Sign Up', new_user_registration_path, class: 'text-gray-700 hover:text-indigo-600 transition duration-300' %>
+      <% end %>
+    </nav>
+    <div class="md:hidden">
+      <button id="menu-toggle" class="text-gray-700 hover:text-indigo-600 focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+  <%= link_to 'Home', root_path, class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
+  <%= link_to 'About', about_path, class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
+  <%= link_to 'Contact', contact_path, class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
+  <% Category.all.each do |category| %>
+    <%= link_to category.name, category_products_path(category), class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
+  <% end %>
+  <% if user_signed_in? %>
+    <%= link_to 'My Orders', user_orders_path(current_user), class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
+    <%= link_to 'My Account', edit_user_registration_path, class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
+    <%= link_to 'Sign Out', destroy_user_session_path, method: :get, class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
+  <% else %>
+    <%= link_to 'Sign In', new_user_session_path, class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
+    <%= link_to 'Sign Up', new_user_registration_path, class: 'block px-4 py-2 text-gray-700 hover:bg-gray-100' %>
+  <% end %>
+</div>
