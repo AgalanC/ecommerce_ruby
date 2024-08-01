@@ -1,7 +1,7 @@
 class Order < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :tax
-  has_many :order_items
+  has_many :order_items, dependent: :destroy
   has_many :beers, through: :order_items
 
   validates :tax_id, :status, presence: true
@@ -19,6 +19,13 @@ class Order < ApplicationRecord
 
   def display_name
     "Order ##{id}"
+  end
+
+  def recalculate_totals!
+    self.total_price = order_items.sum { |item| item.price * item.quantity }
+    self.total_tax = total_price * (tax.gst_rate + tax.pst_rate + tax.hst_rate + tax.qst_rate)
+    self.final_price = total_price + total_tax
+    save
   end
 
   private

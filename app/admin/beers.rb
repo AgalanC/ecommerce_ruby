@@ -1,5 +1,4 @@
 ActiveAdmin.register Beer do
-
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #
@@ -68,6 +67,13 @@ ActiveAdmin.register Beer do
         end
       end
     end
+    panel "Order Items" do
+      table_for beer.order_items do
+        column :order
+        column :quantity
+        column :price
+      end
+    end
     active_admin_comments
   end
 
@@ -77,5 +83,4 @@ ActiveAdmin.register Beer do
   filter :stock_quantity
   filter :category
   filter :beer_type
-  # Do not include image_attachment_id_eq or any other non-existent attributes here
 end
