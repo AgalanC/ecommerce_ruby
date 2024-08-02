@@ -3,11 +3,11 @@ class ProductsController < ApplicationController
 
   def index
     if params[:filter] == 'new'
-      @products = Beer.new_beers
+      @products = Beer.new_beers.page(params[:page]).per(10)
     elsif params[:filter] == 'recently_updated'
-      @products = Beer.recently_updated
+      @products = Beer.recently_updated.page(params[:page]).per(10)
     else
-      @products = Beer.all
+      @products = Beer.page(params[:page]).per(10)
     end
   end
 
@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
 
   def category
     @category = Category.find(params[:id])
-    @products = @category.beers
+    @products = @category.beers.page(params[:page]).per(10)
   end
 
   def search
@@ -28,6 +28,7 @@ class ProductsController < ApplicationController
     if params[:category_id].present?
       @products = @products.where(category_id: params[:category_id])
     end
+    @products = @products.page(params[:page]).per(10)
     render :index
   end
 end
