@@ -2,6 +2,13 @@
   <p>Find me in app/views/pages/show.html.erb</p>
 </div> %>
 
-<h1><%= @page.title %></h1>
-<div><%= @page.content.html_safe %></div>
-
+<% if @page.present? %>
+  <% if @page.title.present? %>
+    <h1 class="text-4xl font-bold text-center mb-8 text-indigo-600"><%= @page.title %></h1>
+  <% end %>
+  <div class="text-gray-700 space-y-4">
+    <%= @page.content.html_safe %>
+  </div>
+<% else %>
+  <p class="text-red-600 text-center">Page not found.</p>
+<% end %>
